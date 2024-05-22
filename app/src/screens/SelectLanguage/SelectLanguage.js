@@ -1,9 +1,11 @@
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image } from 'react-native'
-import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView,
+   TextInput, Image, TouchableWithoutFeedback } from 'react-native'
+import React, { useState, useRef } from 'react';
 import CheckBox from '@react-native-community/checkbox';
 import Dimension from '../../consts/Dimension';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Images from '../../consts/Images';
+
 
 const languages = [
   { name: 'US - English', flag: Images.usflag },
@@ -20,8 +22,28 @@ const languages = [
 
 const SelectLanguage = ({ navigation }) => {
   const [checkedStates, setCheckedStates] = useState(Array(languages.length).fill(false));
-  const [isFocused, setIsFocused] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef(null);
+
+  const handleToggleFocus = () => {
+    if (isFocused) {
+      inputRef.current.blur();
+    } else {
+      inputRef.current.focus();
+    }
+  };
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+  const handleClear = () => {
+    setSearchText('');
+    inputRef.current.blur();
+    setIsFocused(false);
+  };
 
   const handleCheckboxChange = (index) => {
     const newCheckedStates = [...checkedStates];
@@ -44,33 +66,40 @@ const SelectLanguage = ({ navigation }) => {
     return reorderedLanguages;
   };
 
-  const handleClearText = () => {
-    setSearchText('');
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.header_view}>
         <Text style={styles.header_text}>Select Language</Text>
       </View>
-      <View style={styles.search_view}>
-        <Image
-          source={Images.searchiconblue}
-          style={styles.search_icon}
-        />
-        <TextInput
-          style={styles.search_input}
-          placeholder={'Search here'}
-          placeholderTextColor='#D8D8D8'
-          value={searchText}
-          onChangeText={(text) => {
-          setSearchText(text);
-          }}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-        />
-      </View>
-
+      <TouchableWithoutFeedback onPress={handleToggleFocus}>
+        <View style={[styles.search_view, isFocused && styles.search_view_Focused]}>
+          <Image
+            source={Images.searchiconblue}
+            style={styles.search_icon}
+          />
+          <TextInput
+            ref={inputRef}
+            style={styles.search_input}
+            placeholder={isFocused ? '' : 'Search here...'}
+            placeholderTextColor='#D8D8D8'
+            value={searchText}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChangeText={setSearchText}
+          />
+          {isFocused && (
+            <TouchableOpacity onPress={handleClear}>
+              <Image
+                source={Images.crossicon}
+                style={styles.cross_icon}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+      <ScrollView
+      showsVerticalScrollIndicator={false}
+      >
       <View style={styles.list_view}>
         {searchAndReorder(searchText).map((language, index) => (
           <View key={index} style={styles.rectangle_view}>
@@ -92,7 +121,7 @@ const SelectLanguage = ({ navigation }) => {
           </View>
         ))}
       </View>
-
+      </ScrollView>
       <View style={styles.button_view}>
         <TouchableOpacity
           style={styles.getstarted_button}
@@ -135,13 +164,19 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 10,
   },
-  search_view_focused: {
+  search_view_Focused: {
     borderColor: '#277cff',
     borderWidth: 1,
   },
   search_icon: {
-    width: wp('6%'),
-    height: hp('3%'),
+    width: wp('5%'),
+    height: hp('2%'),
+  },
+  cross_icon: {
+    width: wp('3.8%'),
+    height: hp('1.9%'),
+    tintColor: '#277cff',
+    marginRight: 8,
   },
   search_input: {
     flex: 1,
@@ -151,10 +186,7 @@ const styles = StyleSheet.create({
   },
   clear_icon_container: {
     padding: 5,
-  },
-  clear_icon: {
-    width: 20,
-    height: 20,
+    backgroundColor: 'red'
   },
   list_view: {
     flex: 1,
@@ -197,7 +229,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: 'white',
-  }
+  },
 });
 
 export default SelectLanguage;

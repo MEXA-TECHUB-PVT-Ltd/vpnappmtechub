@@ -16,18 +16,36 @@ import Home from './app/src/screens/Home/Home';
 import Countries from './app/src/screens/Countries/Countries';
 import Notifications from './app/src/screens/Notifications/Notifications';
 import Images from './app/src/consts/Images';
+import Subscription from './app/src/screens/Subscription/Subscription';
+import SubscriptionBottomSheet from './app/src/screens/SubscriptionBottomSheet/SubscriptionBottomSheet';
+import SearchLocation from './app/src/screens/SearchLocation/SearchLocation';
+import AppUpdate from './app/src/screens/AppUpdate/AppUpdate';
+import ConnectionStatus from './app/src/screens/ConnectionStatus/ConnectionStatus';
+import ServerUpdate from './app/src/screens/ServerUpdate/ServerUpdate';
+import SearchCountries from './app/src/screens/SearchCountreis/SearchCountries';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const StackNavigator = () => (
+const HomeStackNavigator = () => (
   <Stack.Navigator>
-    <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
-    <Stack.Screen name="Agreement" component={Agreement} options={{ headerShown: false }} />
-    <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} options={{ headerShown: false }} />
-    <Stack.Screen name="TermsConditions" component={TermsConditions} options={{ headerShown: false }} />
-    <Stack.Screen name="SelectLanguage" component={SelectLanguage} options={{ headerShown: false }} />
-    <Stack.Screen name="Loading" component={Loading} options={{ headerShown: false }} />
+    <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+    <Stack.Screen name="SubscriptionBottomSheet" component={SubscriptionBottomSheet} options={{ headerShown: false }} />
+
+  </Stack.Navigator>
+);
+
+const CountriesStackNavigator = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Countries" component={Countries} options={{ headerShown: false }} />
+
+  </Stack.Navigator>
+);
+
+const NotificationsStackNavigator = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Notifications" component={Notifications} options={{ headerShown: false }} />
+
   </Stack.Navigator>
 );
 
@@ -48,8 +66,8 @@ const TabNavigator = ({ navigation }) => (
     })}
   >
     <Tab.Screen
-      name="Home"
-      component={Home}
+      name="HomeTab"
+      component={HomeStackNavigator}
       options={({ navigation }) => ({
         tabBarIcon: ({ focused, color, size }) => (
           <View style={{ alignItems: 'center' }}>
@@ -64,8 +82,8 @@ const TabNavigator = ({ navigation }) => (
     />
 
     <Tab.Screen
-      name="Countries"
-      component={Countries}
+      name="CountriesTab"
+      component={CountriesStackNavigator}
       options={{
         headerStyle: {
           backgroundColor: '#fff',
@@ -83,8 +101,8 @@ const TabNavigator = ({ navigation }) => (
       }}
     />
     <Tab.Screen
-      name="Notifications"
-      component={Notifications}
+      name="NotificationsTab"
+      component={NotificationsStackNavigator}
       options={{
         tabBarIcon: ({ focused, color, size }) => (
           <View style={{ alignItems: 'center' }}>
@@ -97,8 +115,27 @@ const TabNavigator = ({ navigation }) => (
         ),
       }}
     />
-   
   </Tab.Navigator>
+);
+
+const StackNavigator = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
+    <Stack.Screen name="Agreement" component={Agreement} options={{ headerShown: false }} />
+    <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} options={{ headerShown: false }} />
+    <Stack.Screen name="TermsConditions" component={TermsConditions} options={{ headerShown: false }} />
+    <Stack.Screen name="SelectLanguage" component={SelectLanguage} options={{ headerShown: false }} />
+    <Stack.Screen name="Loading" component={Loading} options={{ headerShown: false }} />
+    <Stack.Screen name="Tab" component={TabNavigator} options={{ headerShown: false }} />
+    <Stack.Screen name="Subscription" component={Subscription} options={{ headerShown: false }} />
+    <Stack.Screen name="SearchLocation" component={SearchLocation} options={{ headerShown: false }} />
+    <Stack.Screen name="AppUpdate" component={AppUpdate} options={{ headerShown: false }} />
+    <Stack.Screen name="ConnectionStatus" component={ConnectionStatus} options={{ headerShown: false }} />
+    <Stack.Screen name="ServerUpdate" component={ServerUpdate} options={{ headerShown: false }} />
+    <Stack.Screen name="SubscriptionBottomSheet" component={SubscriptionBottomSheet} options={{ headerShown: false }} />
+    <Stack.Screen name="SearchCountries" component={SearchCountries} options={{ headerShown: false }} />
+
+  </Stack.Navigator>
 );
 
 const App = () => {

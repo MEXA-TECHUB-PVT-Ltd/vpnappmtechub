@@ -4,16 +4,18 @@ import Images from '../../consts/Images';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Dimension from '../../consts/Dimension';
 import BottomSheet from '../BottomSheet/BottomSheet';
+import SubscriptionBottomSheet from '../SubscriptionBottomSheet/SubscriptionBottomSheet';
 
-const Home = () => {
+const Home = ({ navigation, route }) => {
   const [connected, setConnected] = useState(false);
   const [statusText, setStatusText] = useState('Not Connected');
   const [connecting, setConnecting] = useState(false);
   const [dataAmount, setDataAmount] = useState('5.6 GBs');
-
+  const [savedElapsedTime, setSavedElapsedTime] = useState();
   const [elapsedTime, setElapsedTime] = useState(0);
   const intervalRef = useRef(null);
 
+  const [isSubscriptionVisible, setSubscriptionVisible] = useState(true);
   const [openBottomSheet, setOpenBottomSheet] = useState(false);
   const animationValues = [useRef(new Animated.Value(0)).current,
   useRef(new Animated.Value(0)).current, useRef(new Animated.Value(0)).current];
@@ -24,8 +26,6 @@ const Home = () => {
     }
   }, [connecting]);
 
-  
-
   useEffect(() => {
     if (connected) {
       intervalRef.current = setInterval(() => {
@@ -33,7 +33,7 @@ const Home = () => {
       }, 1000);
     } else {
       clearInterval(intervalRef.current);
-      setElapsedTime(0);
+
     }
     return () => clearInterval(intervalRef.current);
   }, [connected]);
@@ -77,14 +77,18 @@ const Home = () => {
     } else {
       setConnected(false);
       setStatusText('Not Connected');
+      setSavedElapsedTime(elapsedTime);
+      setElapsedTime(0);
     }
   };
+
+  useEffect(() => {
+    setSubscriptionVisible(true);
+  }, []);
 
   const openSheet = () => {
     setOpenBottomSheet(true);
   };
-
- 
 
   return (
     <View style={styles.container}>
@@ -96,10 +100,15 @@ const Home = () => {
               style={styles.drawer_icon}
             />
           </View>
-          <Image
-            source={Images.subscriptionicon}
-            style={styles.subscription_icon}
-          />
+          <TouchableOpacity
+            style={styles.subscription_view}
+            onPress={() => navigation.navigate('Subscription', { previousScreen: 'Home' })}
+          >
+            <Image
+              source={Images.subscriptionicon}
+              style={styles.subscription_icon}
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.logo_view}>
           <Text style={styles.logo_text}>Welcome To</Text>
@@ -108,25 +117,28 @@ const Home = () => {
             style={styles.logo_image}
           />
         </View>
-        <View style={styles.rectangle_view}>
-          <Image
-            source={Images.usflag}
-            style={{ width: 34, height: 34, borderRadius: 50, marginLeft: 10 }}
-          />
-          <View>
-            <Text style={styles.rectangle_text1}>United States</Text>
-            <Text style={styles.rectangle_text2}>Ip - 127.123.21.12</Text>
-          </View>
-
-          <View style={{
-            flex: 1, flexDirection: 'row', marginRight: 20, marginLeft: 10,
-            justifyContent: 'flex-end'
-          }}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('SearchLocation', { previousScreen: 'Home' })}
+        >
+          <View style={styles.rectangle_view}>
             <Image
-              source={Images.arrowrighticon}
-              style={styles.arrow_right_icon} />
+              source={Images.usflag}
+              style={{ width: 34, height: 34, borderRadius: 50, marginLeft: 10 }}
+            />
+            <View>
+              <Text style={styles.rectangle_text1}>United States</Text>
+              <Text style={styles.rectangle_text2}>Ip - 127.123.21.12</Text>
+            </View>
+            <View style={{
+              flex: 1, flexDirection: 'row', marginRight: 20, marginLeft: 10,
+              justifyContent: 'flex-end'
+            }}>
+              <Image
+                source={Images.arrowrighticon}
+                style={styles.arrow_right_icon} />
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.button,
@@ -135,12 +147,12 @@ const Home = () => {
               styles.disconnected_background]}
           onPress={() => {
             handlePress();
-            if (connected) { 
-              openSheet(); 
+            if (connected) {
+              openSheet();
             }
-          }}  
-         
-          >
+          }}
+
+        >
           <Image
             source={connected ? Images.buttondisconnectedicon :
               connecting ? Images.connectingicon :
@@ -185,9 +197,9 @@ const Home = () => {
         {connected && (
           <View style={styles.connected_info}>
             <View style={styles.data_view}>
-              <Image 
-              source={Images.dataicon}
-              style={styles.data_icon}/>
+              <Image
+                source={Images.dataicon}
+                style={styles.data_icon} />
               <Text style={styles.data_text}>{dataAmount}</Text>
             </View>
             <View style={styles.time_view}>
@@ -200,11 +212,17 @@ const Home = () => {
         )}
 
       </View>
+
+      <SubscriptionBottomSheet
+        visible={isSubscriptionVisible}
+        onClose={() => setSubscriptionVisible(false)}
+      />
+
       <BottomSheet
         visible={openBottomSheet}
         dataAmount={dataAmount}
-        elapsedTime={elapsedTime}
-        onClose={() => setOpenBottomSheet(false)} 
+        elapsedTime={savedElapsedTime}
+        onClose={() => setOpenBottomSheet(false)}
       />
 
       <View style={styles.ads_view}>
@@ -245,6 +263,14 @@ const styles = StyleSheet.create({
   drawer_icon: {
     width: wp('5%'),
     height: hp('2%'),
+  },
+  subscription_view: {
+    backgroundColor: 'transparent',
+    width: wp('8.4%'),
+    height: hp('3.7%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
   },
   subscription_icon: {
     width: wp('8%'),
@@ -288,7 +314,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 12,
     lineHeight: 14,
-   
+
   },
   button: {
     width: wp('36%'),
@@ -351,8 +377,8 @@ const styles = StyleSheet.create({
   },
   button_text_line: {
     lineHeight: 16,
-    marginVertical: 0, 
-    paddingVertical: 0, 
+    marginVertical: 0,
+    paddingVertical: 0,
     marginBottom: 0,
     fontSize: 12,
     fontWeight: '600',
@@ -375,7 +401,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '500',
   },
-
   text_ads: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -388,7 +413,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0, 
+    right: 0,
   },
   bar: {
     width: 7,

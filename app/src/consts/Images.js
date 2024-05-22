@@ -32,6 +32,19 @@ const Images = {
   dataicon: require('../assets/bkg_img/dataicon.png'),
   timericon: require('../assets/bkg_img/timericon.png'),
   crossicon: require('../assets/bkg_img/crossicon.png'),
+  subscriptioniconlarge: require('../assets/bkg_img/subscriptioniconlarge.png'),
+  globalicon: require('../assets/bkg_img/global.png'),
+  connectivityicon: require('../assets/bkg_img/Vector.png'),
+  serversicon: require('../assets/bkg_img/row-vertical.png'),
+  adsfreeicon: require('../assets/bkg_img/adsfreeicon.png'),
+  greensignalicon: require('../assets/bkg_img/greensignalicon.png'),
+  yellowsignalicon: require('../assets/bkg_img/yellowsignalicon.png'),
+  redsignalicon: require('../assets/bkg_img/redsignalicon.png'),
+  notifications: require('../assets/bkg_img/nonotifications.png'),
+  serverupdateicon: require('../assets/bkg_img/serverupdateicon.png'),
+  appupdateicon: require('../assets/bkg_img/appupdateicon.png'),
+  connectionstatusicon: require('../assets/bkg_img/connectionstatusicon.png'),
+  pakistanflag: require('../assets/bkg_img/pakistanflagicon.png'),
 
 };
 

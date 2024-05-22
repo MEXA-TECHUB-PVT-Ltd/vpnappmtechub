@@ -3,8 +3,9 @@ import React, { useEffect } from 'react';
 import Dimension from '../../consts/Dimension';
 import Images from '../../consts/Images';
 
-const PopUpSuccessful = ({ successMessage }) => {
-    
+const PopUpSuccessful = ({ successMessage, visible }) => {
+    if (!visible) return null;
+
     return (
         <View style={styles.container}>
             <View style={styles.green_view}>
@@ -20,9 +21,13 @@ const PopUpSuccessful = ({ successMessage }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        position: 'absolute',
+        top: 210,
+        left: '50%',
+        transform: [{ translateX: -Dimension.width / 2.2 }, { translateY: -Dimension.height / 3.5 }],
         backgroundColor: 'transparent',
         alignItems: 'center',
+        zIndex: 1000,
     },
     image: {
         width: Dimension.width / 10,

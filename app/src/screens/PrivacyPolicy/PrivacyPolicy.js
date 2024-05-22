@@ -16,7 +16,6 @@ const PrivacyPolicy = ({ navigation }) => {
                         style={styles.back_icon}
                     />
                 </TouchableOpacity>
-               
                 <Text style={styles.header_text}>Privacy Policy</Text>
             </View>
             <View style={styles.logo_view}>
