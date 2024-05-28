@@ -94,6 +94,7 @@ const SubscriptionBottomSheet = ({visible, onClose}) => {
                                     <CheckBox
                                         value={isChecked1}
                                         onValueChange={handleCheck1}
+                                        tintColors={{ true: '#3078ef', false: 'white' }}
                                     />
                                 </View>
                             </View>
@@ -103,6 +104,7 @@ const SubscriptionBottomSheet = ({visible, onClose}) => {
                                     <CheckBox
                                         value={isChecked2}
                                         onValueChange={handleCheck2}
+                                        tintColors={{ true: '#3078ef', false: 'white' }}
                                     />
                                 </View>
                             </View>
@@ -139,8 +141,9 @@ const SubscriptionBottomSheet = ({visible, onClose}) => {
                             </View>
                         </Modal>
                     )}
-                    <PopUpSuccessful successMessage="Subscription paid Successfully!" visible={isPopupVisible} />
                 </View>
+                <PopUpSuccessful successMessage="Subscription paid Successfully!" visible={isPopupVisible} />
+
             </View>
         </Modal>
     );

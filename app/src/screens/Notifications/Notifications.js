@@ -15,7 +15,7 @@ const notifications = [
     id: 2,
     notificationname: 'Server Update',
     icon: Images.serverupdateicon,
-    notificationdescription: 'New server available! Explore faster speeds with our latest server locations in Singapore. Connect now for optimized browzing.'
+    notificationdescription: 'New server available! Explore faster speeds with our latest server locations in Singapore. Connect now for optimized browsing.'
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ const notifications = [
     id: 5,
     notificationname: 'Server Update',
     icon: Images.serverupdateicon,
-    notificationdescription: 'New server available! Explore faster speeds with our latest server locations in Singapore. Connect now for optimized browzing.'
+    notificationdescription: 'New server available! Explore faster speeds with our latest server locations in Singapore. Connect now for optimized browsing.'
   },
   {
     id: 6,
@@ -51,7 +51,7 @@ const notifications = [
     id: 8,
     notificationname: 'Server Update',
     icon: Images.serverupdateicon,
-    notificationdescription: 'New server available! Explore faster speeds with our latest server locations in Singapore. Connect now for optimized browzing.'
+    notificationdescription: 'New server available! Explore faster speeds with our latest server locations in Singapore. Connect now for optimized browsing.'
   },
   {
     id: 9,
@@ -68,14 +68,14 @@ const notifications = [
 
 ];
 
-export default Notifications = ({ navigation}) => {
+const Notifications = ({ navigation}) => {
   const [showImage, setShowImage] = useState(true);
   const [readNotifications, setReadNotifications] = useState([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowImage(false);
-    }, 3000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -139,12 +139,14 @@ export default Notifications = ({ navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header_view}>
-        <View style={styles.drawer_icon_view}>
+        <TouchableOpacity 
+        onPress={() => navigation.openDrawer()}
+        style={styles.drawer_icon_view}>
           <Image
             source={Images.drawericon}
             style={styles.drawer_icon}
           />
-        </View>
+        </TouchableOpacity>
         <Text style={styles.header_text}>Notifications</Text>
         <TouchableOpacity
           style={styles.subscription_view}
@@ -332,6 +334,8 @@ const styles = StyleSheet.create({
   text_ads: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: 'white'
   },
 })
 
+export default Notifications;

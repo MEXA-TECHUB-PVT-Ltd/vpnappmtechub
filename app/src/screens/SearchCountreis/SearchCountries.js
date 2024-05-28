@@ -5,7 +5,7 @@ import Images from '../../consts/Images';
 import Dimension from '../../consts/Dimension';
 
 const SearchCountries = ({ navigation, route }) => {
-    const { countries } = route.params; // Assuming countries are passed as a route param
+    const { countries } = route.params;
     const [searchText, setSearchText] = useState('');
     const [filteredCountries, setFilteredCountries] = useState([]);
 
@@ -82,7 +82,7 @@ const SearchCountries = ({ navigation, route }) => {
                             </View>
                         ))
                     ) : (
-                        <Text style={styles.noResultsText}>No countries to display. Please enter a search term.</Text>
+                        <Text style={styles.noResultsText}>Search for a Country</Text>
                     )}
             </ScrollView>
         </View>

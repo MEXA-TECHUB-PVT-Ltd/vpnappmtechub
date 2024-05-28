@@ -27,12 +27,15 @@ const Countries = ({ navigation, }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header_view}>
-        <View style={styles.drawer_icon_view}>
+        <TouchableOpacity
+         onPress={() => navigation.openDrawer()}
+         style={styles.drawer_icon_view}
+         >
           <Image
             source={Images.drawericon}
             style={styles.drawer_icon}
           />
-        </View>
+        </TouchableOpacity>
         <Text style={styles.header_text}>Countries</Text>
         <TouchableOpacity
           style={styles.subscription_view}
@@ -53,7 +56,7 @@ const Countries = ({ navigation, }) => {
           <View style={styles.texts}>
             <Text style={styles.rectangle_text1}>Connect Fastest Server</Text>
             <Switch
-              trackColor={{ false: 'gray', true: 'cyan' }}
+              trackColor={{ false: 'gray', true: '#3078ef' }}
               thumbColor={isEnabled ? 'white' : '#f4f3f4'}
               onValueChange={toggleSwitch}
               value={isEnabled}
@@ -270,6 +273,7 @@ const styles = StyleSheet.create({
   text_ads: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: 'white'
   },
 
   //Search Country CSS

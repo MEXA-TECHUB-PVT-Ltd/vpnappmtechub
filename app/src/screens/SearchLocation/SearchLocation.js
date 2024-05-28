@@ -52,7 +52,7 @@ const SearchLocation = ({ navigation }) => {
                 <View style={styles.texts}>
                     <Text style={styles.rectangle_text1}>Connect Fastest Server</Text>
                     <Switch
-                        trackColor={{ false: 'gray', true: 'cyan' }}
+                        trackColor={{ false: 'gray', true: '#3078ef' }}
                         thumbColor={isEnabled ? 'white' : '#f4f3f4'}
                         onValueChange={toggleSwitch}
                         value={isEnabled}
@@ -240,6 +240,7 @@ const styles = StyleSheet.create({
     text_ads: {
         fontSize: 20,
         fontWeight: 'bold',
+        color: 'white'
     },
 })
 

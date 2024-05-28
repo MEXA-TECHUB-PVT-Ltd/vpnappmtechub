@@ -6,7 +6,6 @@ import Dimension from '../../consts/Dimension';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Images from '../../consts/Images';
 
-
 const languages = [
   { name: 'US - English', flag: Images.usflag },
   { name: 'Netherlands - Dutch', flag: Images.netherlandflag },
@@ -116,6 +115,7 @@ const SelectLanguage = ({ navigation }) => {
               <CheckBox
                 value={checkedStates[index]}
                 onValueChange={() => handleCheckboxChange(index)}
+                tintColors={{ true: '#3078ef', false: 'white' }}
               />
             </View>
           </View>
@@ -173,8 +173,8 @@ const styles = StyleSheet.create({
     height: hp('2%'),
   },
   cross_icon: {
-    width: wp('3.8%'),
-    height: hp('1.9%'),
+    width: wp('3%'),
+    height: hp('1.5%'),
     tintColor: '#277cff',
     marginRight: 8,
   },

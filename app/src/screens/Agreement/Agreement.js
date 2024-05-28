@@ -31,7 +31,8 @@ const Agreement = ({navigation}) => {
                 }}>
                     <CheckBox
                         value={isChecked}
-                        onValueChange={handleCheckboxChange} />
+                        onValueChange={handleCheckboxChange} 
+                        tintColors={{ true: '#3078ef', false: 'white' }}/>
                     <Text style={{ color: 'white', fontSize: 15, fontWeight: '300' }}>By Clicking, you are agreeing to</Text>
                 </View>
 

@@ -40,7 +40,7 @@ const BottomSheet = ({ visible, dataAmount, elapsedTime, onClose }) => {
                         />
                         <View style={styles.texts}>
                             <Text style={styles.rectangle_text1}>United States</Text>
-                            <Text style={styles.rectangle_text2}>Ip - 127.123.21.12</Text>
+                            <Text style={styles.rectangle_text2}>IP - 127.123.21.12</Text>
                         </View>
                     </View>
 
@@ -84,7 +84,9 @@ const styles = StyleSheet.create({
         top: 20,
         left: 20,
         fontSize: 19,
-        fontWeight: '600'
+        fontWeight: '600',
+        color: '#fff',
+        
     },
     closeButton: {
         backgroundColor: 'transparent',

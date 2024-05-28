@@ -16,7 +16,7 @@ const Loading = ({ navigation }) => {
     }, 2500);
 
     const timeout3 = setTimeout(() => {
-      navigation.navigate('Tab');
+      navigation.navigate('Drawer');
     }, 4000);
 
     return () => {

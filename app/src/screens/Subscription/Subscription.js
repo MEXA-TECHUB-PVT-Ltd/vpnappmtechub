@@ -92,6 +92,7 @@ const Subscription = ({ navigation, route }) => {
                             <CheckBox
                                 value={isChecked1}
                                 onValueChange={handleCheck1}
+                                tintColors={{ true: '#3078ef', false: 'white' }}
                             />
                         </View>
                     </View>
@@ -101,6 +102,7 @@ const Subscription = ({ navigation, route }) => {
                             <CheckBox
                                 value={isChecked2}
                                 onValueChange={handleCheck2}
+                                tintColors={{ true: '#3078ef', false: 'white' }}
                             />
                         </View>
                     </View>
