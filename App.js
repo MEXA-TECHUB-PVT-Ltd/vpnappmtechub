@@ -25,7 +25,7 @@ import SearchLocation from './app/src/screens/SearchLocation/SearchLocation';
 import AppUpdate from './app/src/screens/AppUpdate/AppUpdate';
 import ConnectionStatus from './app/src/screens/ConnectionStatus/ConnectionStatus';
 import ServerUpdate from './app/src/screens/ServerUpdate/ServerUpdate';
-import SearchCountries from './app/src/screens/SearchCountreis/SearchCountries';
+import SearchCountries from './app/src/screens/SearchCountries/SearchCountries';
 import HelpAndSupport from './app/src/screens/HelpandSupport/HelpAndSupport';
 import FAQs from './app/src/screens/FAQs/FAQs';
 import FilterApps from './app/src/screens/FilterApps/FilterApps';
