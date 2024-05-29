@@ -101,7 +101,7 @@ const SelectLanguage = ({ navigation }) => {
       >
       <View style={styles.list_view}>
         {searchAndReorder(searchText).map((language, index) => (
-          <View key={index} style={styles.rectangle_view}>
+          <View key={language.name} style={styles.rectangle_view}>
             {language.flag ? (
               <Image
                 source={language.flag}
