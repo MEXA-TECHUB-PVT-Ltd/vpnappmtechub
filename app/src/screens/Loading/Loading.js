@@ -24,7 +24,7 @@ const Loading = ({ navigation }) => {
       clearTimeout(timeout2);
       clearTimeout(timeout3);
     };
-  }, []);
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
