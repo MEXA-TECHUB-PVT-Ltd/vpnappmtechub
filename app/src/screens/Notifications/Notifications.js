@@ -324,6 +324,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     backgroundColor: 'transparent'
   },
+  current_time: {
+    color: 'white',
+  },
   ads_view: {
     width: wp('100%'),
     backgroundColor: '#424262',

@@ -15,8 +15,6 @@ const languages = [
   { name: 'Germany - German', flag: Images.germanyflag },
   { name: 'Canada - English', flag: Images.usflag },
   { name: 'UK - English', flag: Images.ukflag },
-  { name: 'Germany - German', flag: Images.germanyflag },
-  { name: 'Canada - English', flag: Images.ukflag }
 ];
 
 const SelectLanguage = ({ navigation }) => {
@@ -57,10 +55,11 @@ const SelectLanguage = ({ navigation }) => {
       language.name.toLowerCase().includes(query)
     );
 
-    const reorderedLanguages = [
-      ...filteredLanguages.filter(language => language.name.toLowerCase().startsWith(query)),
-      ...filteredLanguages.filter(language => !language.name.toLowerCase().startsWith(query))
-    ];
+    const reorderedLanguages = filteredLanguages.sort((a, b) => {
+         const aStartsWith = a.name.toLowerCase().startsWith(query);
+         const bStartsWith = b.name.toLowerCase().startsWith(query);
+         return bStartsWith - aStartsWith;
+       });
 
     return reorderedLanguages;
   };
@@ -101,7 +100,7 @@ const SelectLanguage = ({ navigation }) => {
       >
       <View style={styles.list_view}>
         {searchAndReorder(searchText).map((language, index) => (
-          <View key={index} style={styles.rectangle_view}>
+          <View key={language.name} style={styles.rectangle_view}>
             {language.flag ? (
               <Image
                 source={language.flag}

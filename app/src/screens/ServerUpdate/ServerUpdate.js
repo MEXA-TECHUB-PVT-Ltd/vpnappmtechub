@@ -1,12 +1,25 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native'
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import Images from '../../consts/Images';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Dimension from '../../consts/Dimension';
-import BottomSheet from '../BottomSheet/BottomSheet';
 import VPNButton from '../../components/VPNButton/VPNButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetElapsedTime } from '../../redux/vpnSlice';
 
 const ServerUpdate = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const {connected, connecting, elapsedTime, statusText, dataAmount} = useSelector(state => state.vpn);
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            if (!connected) {
+                dispatch(resetElapsedTime());
+            }
+        });
+        return unsubscribe;
+    }, [navigation, connected, dispatch]);
+
     return (
         <View style={styles.container}>
             <View style={styles.main_view}>
@@ -24,8 +37,8 @@ const ServerUpdate = ({ navigation }) => {
 
                 <View style={styles.logo_view}>
                     <Text style={styles.logo_text}>New server available!
-                     Explore faster speeds with our latest server locations in Singapore.
-                      Connect now for optimized browsing.</Text>
+                        Explore faster speeds with our latest server locations in Singapore.
+                        Connect now for optimized browsing.</Text>
                 </View>
                 <View style={styles.rectangle_view}>
                     <Image
@@ -34,10 +47,16 @@ const ServerUpdate = ({ navigation }) => {
                     />
                     <View>
                         <Text style={styles.rectangle_text1}>United States</Text>
-                        <Text style={styles.rectangle_text2}>Ip - 127.123.21.12</Text>
+                        <Text style={styles.rectangle_text2}>IP - 127.123.21.12</Text>
                     </View>
                 </View>
-               <VPNButton />
+                <VPNButton
+                    connected={connected}
+                    connecting={connecting}
+                    elapsedTime={elapsedTime}
+                    statusText={statusText}
+                    dataAmount={dataAmount}
+                />
             </View>
         </View>
     )

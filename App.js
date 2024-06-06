@@ -1,13 +1,15 @@
 import 'react-native-gesture-handler';
 import { StyleSheet, Text, View, Image, Switch } from 'react-native'
 import React from 'react';
+import { Provider } from 'react-redux';
+import store from './app/src/redux/store';
+import TimerManager from './app/src/redux/timerManager';
 import 'react-native-reanimated';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Dimension from './app/src/consts/Dimension';
 import Splash from './app/src/screens/Splash/Splash';
 import Agreement from './app/src/screens/Agreement/Agreement';
 import PrivacyPolicy from './app/src/screens/PrivacyPolicy/PrivacyPolicy';
@@ -25,7 +27,7 @@ import SearchLocation from './app/src/screens/SearchLocation/SearchLocation';
 import AppUpdate from './app/src/screens/AppUpdate/AppUpdate';
 import ConnectionStatus from './app/src/screens/ConnectionStatus/ConnectionStatus';
 import ServerUpdate from './app/src/screens/ServerUpdate/ServerUpdate';
-import SearchCountries from './app/src/screens/SearchCountreis/SearchCountries';
+import SearchCountries from './app/src/screens/SearchCountries/SearchCountries';
 import HelpAndSupport from './app/src/screens/HelpandSupport/HelpAndSupport';
 import FAQs from './app/src/screens/FAQs/FAQs';
 import FilterApps from './app/src/screens/FilterApps/FilterApps';
@@ -36,7 +38,6 @@ import ShareApp from './app/src/screens/ShareApp/ShareApp';
 import Mcicon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Anticon from 'react-native-vector-icons/AntDesign';
-import Faicon from 'react-native-vector-icons/FontAwesome';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -81,6 +82,7 @@ function CustomizeDrawer(props) {
         <Ionicon name="notifications-outline" size={25} color="white" />
         <Text style={styles.customDrawerItemText}>Notifications</Text>
         <Switch
+          accessibilityLabel="Toggle notifications"
           value={isNotificationsEnabled}
           onValueChange={toggleNotificationsSwitch}
           trackColor={{ false: "#767577", true: "#267CFF" }}
@@ -107,6 +109,9 @@ const DrawerNavigator = () => {
         drawerContentOptions: {
           activeBackgroundColor: 'transparent', 
           inactiveBackgroundColor: 'transparent', 
+          contentContainerStyle: {
+            paddingVertical: 0,
+          },
         },
       }}
       drawerContent={(props) => <CustomizeDrawer {...props} />}
@@ -116,7 +121,10 @@ const DrawerNavigator = () => {
         component={TabNavigator}
         options={{
           headerShown: false,
-          drawerItemStyle: { height: 0 }
+          drawerItemStyle: { 
+            marginVertical: 0,
+            height: 0 
+          }
         }}
       />
       <Drawer.Screen
@@ -126,7 +134,10 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, size }) => (
             <Mcicon name="filter-outline" color='white' size={25} />
           ),
-          headerShown: false
+          headerShown: false,
+          drawerItemStyle: {
+            marginVertical: 0,
+          }
         }}
       />
       <Drawer.Screen
@@ -136,7 +147,10 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, size }) => (
             <Ionicon name="language" color='white' size={25} />
           ),
-          headerShown: false
+          headerShown: false,
+          drawerItemStyle: {
+            marginVertical: 0,
+          }
         }}
       />
       <Drawer.Screen
@@ -147,9 +161,9 @@ const DrawerNavigator = () => {
             <Ionicon name="chatbubble-ellipses-outline" color='white' size={25} />
           ),
           headerShown: false,
-           drawerStyle: {
-            backgroundColor: 'transparent',
-          },
+          drawerItemStyle: {
+            marginVertical: 0,
+          }
         }}
       />
       <Drawer.Screen
@@ -160,9 +174,9 @@ const DrawerNavigator = () => {
             <Anticon name="questioncircleo" color='white' size={25} />
           ),
           headerShown: false,
-          drawerStyle: {
-            backgroundColor: 'transparent',
-          },
+          drawerItemStyle: {
+            marginVertical: 0,
+          }
         }}
       />
       <Drawer.Screen
@@ -172,7 +186,10 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, size }) => (
             <Anticon name="customerservice" color='white' size={25} />
           ),
-          headerShown: false
+          headerShown: false,
+          drawerItemStyle: {
+            marginVertical: 0,
+          }
         }}
       />
       <Drawer.Screen
@@ -182,7 +199,10 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, size }) => (
             <Mcicon name="lock-outline" color='white' size={25} />
           ),
-          headerShown: false
+          headerShown: false,
+          drawerItemStyle: {
+            marginVertical: 0,
+          }
         }}
       />
       <Drawer.Screen
@@ -192,7 +212,10 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, size }) => (
             <Anticon name="filetext1" color='white' size={25} />
           ),
-          headerShown: false
+          headerShown: false,
+          drawerItemStyle: {
+            marginVertical: 0,
+          }
         }}
       />
       <Drawer.Screen
@@ -202,7 +225,10 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, size }) => (
             <Mcicon name="star-outline" color='white' size={25} />
           ),
-          headerShown: false
+          headerShown: false,
+          drawerItemStyle: {
+            marginVertical: 0,
+          }
         }}
       />
       <Drawer.Screen
@@ -212,7 +238,10 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, size }) => (
             <Anticon name="sharealt" color='white' size={25} />
           ),
-          headerShown: false
+          headerShown: false,
+          drawerItemStyle: {
+            marginVertical: 0,
+          }
         }}
       />
     </Drawer.Navigator>
@@ -227,7 +256,10 @@ const TabNavigator = ({ navigation }) => (
       tabBarInactiveTintColor: '#FFFFFF',
       tabBarStyle: {
         backgroundColor: '#262A41',
-        height: hp('8.5%')
+        height: hp('8.5%'),
+        borderTopWidth: 0,  
+        borderTopColor: 'transparent'  
+        
       },
       tabBarLabelStyle: {
         display: 'none',
@@ -309,9 +341,12 @@ const MainNavigator = () => (
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <MainNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <TimerManager />
+        <MainNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 }
 
@@ -322,16 +357,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   line_view: {
-    width: '90%',
+    width: '85%',
     height: 1.2,
     backgroundColor: 'gray',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   image: {
-    width: Dimension.width / 2.6,
-    height: Dimension.height / 8,
+    width: wp('36%'),
+    height: hp('14%'),
     resizeMode: 'contain',
-    marginVertical: 6,
   },
   customDrawerItem: {
     flexDirection: 'row',

@@ -51,7 +51,7 @@ const FAQs = ({ navigation }) => {
     const renderFAQItem = (index, title, contentText) => {
         const heightInterpolation = animations[index].interpolate({
             inputRange: [0, 1],
-            outputRange: [hp('8%'), hp('21%')]
+            outputRange: [hp('8%'), hp('19%')]
         });
 
         const rotateIcon = animations[index].interpolate({
@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 15,
-        fontWeight: '600',
-        lineHeight: 18,
+        fontWeight: '400',
+        lineHeight: 15,
         color: 'white',
     },
     bottom_view: {
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     contentText: {
-        fontSize: 15,
+        fontSize: 12.5,
         fontWeight: '400',
         lineHeight: 18,
         color: 'white',

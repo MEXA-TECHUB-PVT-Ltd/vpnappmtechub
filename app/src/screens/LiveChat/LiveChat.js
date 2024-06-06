@@ -114,8 +114,6 @@ const LiveChat = ({ navigation }) => {
                 user={{
                     _id: 1,
                 }}
-                style={styles.giftedChat}
-
             />
         </View>
     );
@@ -143,21 +141,11 @@ const styles = StyleSheet.create({
     },
     chat_view: {
         alignItems: 'center',
+        backgroundColor: 'transparent'
     },
     chat_icon: {
-        width: wp('25%'),
-        height: hp('16%'),
-        marginBottom: 10,
-    },
-    giftedchat_container: {
-        flex: 1,
-        width: wp('100%'),
-        backgroundColor: '#10172A',
-    },
-    giftedChat: {
-        flex: 1,
-        width: wp('100%'),
-        backgroundColor: '#10172A',
+        width: wp('22%'),
+        height: hp('14%'),
     },
 });
 

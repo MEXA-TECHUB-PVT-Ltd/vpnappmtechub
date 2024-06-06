@@ -202,7 +202,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'transparent',
     paddingVertical: hp('1%'),
     borderRadius: wp('1%'),
     marginRight: wp('2%'),
