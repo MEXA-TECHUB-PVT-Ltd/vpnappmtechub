@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Modal } from 'react-native';
 import Images from '../../consts/Images';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+const BottomSheet = ({ visible, onClose, elapsedTime, dataAmount }) => {
 
-const BottomSheet = ({ visible, dataAmount, elapsedTime, onClose }) => {
     if (!visible) {
         return null;
     }

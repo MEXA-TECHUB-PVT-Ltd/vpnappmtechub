@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Images from '../../consts/Images';
 import Dimension from '../../consts/Dimension';
-import SearchCountries from '../SearchCountreis/SearchCountries';
+import SearchCountries from '../SearchCountries/SearchCountries';
 
 const countries = [
   { name: 'Singapore', flag: Images.singaporeflag, ip: 'IP - 192.168.0.1', premiumicon: null, signal: Images.greensignalicon },

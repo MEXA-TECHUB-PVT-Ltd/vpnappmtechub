@@ -1,23 +1,15 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { connect, disconnect, setConnecting, elapsedTime, resetElapsedTime } from '../../redux/vpnSlice';
 import Images from '../../consts/Images';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Dimension from '../../consts/Dimension';
 import BottomSheet from '../../screens/BottomSheet/BottomSheet';
-import { getVpnStatus, updateVpnStatus } from '../../Utilities/vpnState';
-import { vpnEventEmitter } from '../../Utilities/vpnState';
 
 
 const VPNButton = ({ navigation, route }) => {
-    const [connected, setConnected] = useState(getVpnStatus() === 'connected');
-    const [statusText, setStatusText] = useState(connected ? 'Connected' : 'Not Connected');
-    const [connecting, setConnecting] = useState(false);
-
-    const [dataAmount, setDataAmount] = useState('5.6 GBs');
-    const [savedElapsedTime, setSavedElapsedTime] = useState();
-
-    const [elapsedTime, setElapsedTime] = useState(0);
-    const intervalRef = useRef(null);
+    const dispatch = useDispatch();
+    const { connected, connecting, statusText, elapsedTime, dataAmount } = useSelector(state => state.vpn);
 
     const [openBottomSheet, setOpenBottomSheet] = useState(false);
 
@@ -32,34 +24,6 @@ const VPNButton = ({ navigation, route }) => {
             animateBars();
         }
     }, [connecting]);
-
-    useEffect(() => {
-        if (connected) {
-            intervalRef.current = setInterval(() => {
-                setElapsedTime(prevTime => prevTime + 1);
-            }, 1000);
-        } else {
-            clearInterval(intervalRef.current);
-        }
-        return () => clearInterval(intervalRef.current);
-    }, [connected]);
-
-    useEffect(() => {
-        const handleVpnStatusChange = (status) => {
-            setConnected(status === 'connected');
-            setStatusText(status === 'connected' ? 'Connected' : 'Not Connected');
-            if (status !== 'connected') {
-                setSavedElapsedTime(elapsedTime);
-                setElapsedTime(0);
-            }
-        };
-
-        //to manage same button state at all screens
-        const subscription = vpnEventEmitter.addListener('vpnStatusChanged', handleVpnStatusChange);
-        return () => {
-            subscription.remove();
-        };
-    }, [elapsedTime]);
 
     const formatElapsedTime = (seconds) => {
         const hrs = Math.floor(seconds / 3600);
@@ -84,20 +48,17 @@ const VPNButton = ({ navigation, route }) => {
                 })
             ]);
         });
-
         Animated.loop(Animated.parallel(animations)).start();
     };
 
     const handlePress = () => {
         if (!connected) {
-            setConnecting(true);
-            setStatusText('Connecting');
+            dispatch(setConnecting());
             setTimeout(() => {
-                setConnecting(false);
-                updateVpnStatus('connected');
+                dispatch(connect());
             }, 2000);
         } else {
-            updateVpnStatus('disconnected');
+            dispatch(disconnect());
         }
     };
 
@@ -147,7 +108,8 @@ const VPNButton = ({ navigation, route }) => {
                 {connecting && (
                     <View style={styles.animationContainer}>
                         {animationValues.map((anim, index) => (
-                            <Animated.View key={index} style={[styles.bar, { opacity: anim }]} />
+                            <Animated.View key={`bar-${index}`} style={[styles.bar, { opacity: anim }]}
+                            />
                         ))}
                     </View>
                 )}
@@ -184,8 +146,12 @@ const VPNButton = ({ navigation, route }) => {
             <BottomSheet
                 visible={openBottomSheet}
                 dataAmount={dataAmount}
-                elapsedTime={savedElapsedTime}
-                onClose={() => setOpenBottomSheet(false)}
+                elapsedTime={elapsedTime}
+                onClose={() => {
+                    dispatch(resetElapsedTime());
+                    setOpenBottomSheet(false);
+                }
+                }
             />
         </View>
     );

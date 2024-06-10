@@ -67,6 +67,8 @@ const Images = {
   playstoreicon: require('../assets/bkg_img/playstoreicon.png'),
   staroutlineicon: require('../assets/bkg_img/staroutlineicon.png'),
   starfilledicon: require('../assets/bkg_img/starfilledicon.png'),
+  emptychatimage: require('../assets/bkg_img/emptychatimage.png'),
+
 };
 
 export default Images;

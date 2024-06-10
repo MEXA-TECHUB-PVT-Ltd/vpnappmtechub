@@ -24,7 +24,7 @@ const ShareApp = () => {
       <View style={styles.modal_view}>
         <View style={styles.row_view}>
           {firstRowOptions.map((option, index) => (
-            <View key={index} style={styles.icon_text_view}>
+            <View key={option.label} style={styles.icon_text_view}>
               <View style={styles.icon_backgrounnd}>
                 <Image
                   source={option.icon}

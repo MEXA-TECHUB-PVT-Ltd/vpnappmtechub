@@ -1,13 +1,26 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native'
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Images from '../../consts/Images';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Dimension from '../../consts/Dimension';
-import BottomSheet from '../BottomSheet/BottomSheet';
 import SubscriptionBottomSheet from '../SubscriptionBottomSheet/SubscriptionBottomSheet';
 import VPNButton from '../../components/VPNButton/VPNButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetElapsedTime } from '../../redux/vpnSlice';
 
 const Home = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const {connected, connecting, elapsedTime, statusText, dataAmount} = useSelector(state => state.vpn);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (!connected) {
+        dispatch(resetElapsedTime());
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation, connected, dispatch]);
+
   const [isSubscriptionVisible, setSubscriptionVisible] = useState(true);
 
   useEffect(() => {
@@ -66,7 +79,13 @@ const Home = ({ navigation, route }) => {
             </View>
           </View>
         </TouchableOpacity>
-        <VPNButton />
+        <VPNButton 
+          connected={connected}
+          connecting={connecting}
+          elapsedTime={elapsedTime}
+          statusText={statusText}
+          dataAmount={dataAmount}
+        />
       </View>
 
       <SubscriptionBottomSheet

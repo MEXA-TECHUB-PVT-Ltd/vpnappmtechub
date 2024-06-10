@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Image, TouchableOpacity,TextInput} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import Images from '../../consts/Images';
 import Dimension from '../../consts/Dimension';
@@ -45,30 +45,33 @@ const HelpAndSupport = ({ navigation }) => {
                 </TouchableOpacity>
                 <Text style={styles.header_text}>Help & Support</Text>
             </View>
-            <View style={styles.list_view}>
-                {checkboxes.map((text, index) => (
-                    <View key={index} style={styles.rectangle_view}>
-                        <Text style={styles.rectangle_text}>{text}</Text>
-                        <View style={styles.checkbox_container}>
-                            <CheckBox
-                                value={checkboxesState[index]}
-                                onValueChange={() => handleCheckboxChange(index)}
-                                tintColors={{ true: '#3078ef', false: 'white' }}
-                            />
+            <ScrollView 
+            showsVerticalScrollIndicator= {false}
+            contentContainerStyle={styles.contentContainer}>
+                <View style={styles.list_view}>
+                    {checkboxes.map((text, index) => (
+                        <View key={index} style={styles.rectangle_view}>
+                            <Text style={styles.rectangle_text}>{text}</Text>
+                            <View style={styles.checkbox_container}>
+                                <CheckBox
+                                    value={checkboxesState[index]}
+                                    onValueChange={() => handleCheckboxChange(index)}
+                                    tintColors={{ true: '#3078ef', false: 'white' }}
+                                />
+                            </View>
                         </View>
-                    </View>
-                ))}
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="Add feedback"
-                    placeholderTextColor="#FFFFFF"
-                    multiline={true}
-                />
-                <TouchableOpacity style={styles.getstarted_button} onPress={handlePopUp}>
-                    <Text style={styles.getstarted_text}>Submit</Text>
-                </TouchableOpacity>
-
-            </View>
+                    ))}
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="Add feedback"
+                        placeholderTextColor="#FFFFFF"
+                        multiline={true}
+                    />
+                    <TouchableOpacity style={styles.getstarted_button} onPress={handlePopUp}>
+                        <Text style={styles.getstarted_text}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
             <PopUpSuccessful successMessage="Message Sent Successfully!" visible={isPopupVisible} />
         </View>
     );
@@ -100,8 +103,12 @@ const styles = StyleSheet.create({
         color: 'white',
         marginLeft: 90,
     },
+    contentContainer: {
+        flexGrow: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     list_view: {
-        flex: 1,
         width: '100%',
         alignItems: 'center'
     },
@@ -119,8 +126,6 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         fontWeight: "600",
         fontSize: 14,
-        lineHeight: 21,
-        flex: 1
     },
     checkbox_container: {
         flex: 1,
@@ -138,6 +143,7 @@ const styles = StyleSheet.create({
         padding: 10,
         lineHeight: 30,
         textAlignVertical: 'top',
+        color: 'white'
     },
     getstarted_button: {
         width: wp('85%'),

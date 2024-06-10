@@ -237,7 +237,6 @@ const styles = StyleSheet.create({
     },
     rectangle_view: {
         flexDirection: 'row',
-        marginVertical: 3,
         width: wp('85%'),
         height: hp('6.5%'),
         backgroundColor: '#262A41',
